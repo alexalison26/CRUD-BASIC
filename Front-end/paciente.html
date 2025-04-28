@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administración de Pacientes - Clínica</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/crud-style.css">
+  <link rel="icon" href="/assets/img/Vida-Serena-logo.png" type="image/x-icon">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-clinica">
+    <div class="container">
+      <a class="navbar-brand" href="/">Clínica Sanar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="entityDropdown" role="button" data-bs-toggle="dropdown">
+              Entidades
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="panel-admin.html">Usuarios</a></li>
+                <li><a class="dropdown-item" href="paciente.html">Pacientes</a></li>
+                <li><a class="dropdown-item" href="citas.html">Citas</a></li>
+                <li><a class="dropdown-item" href="doctor.html">Doctores</a></li>
+                <li><a class="dropdown-item" href="enfermero.html">Enfermeros</a></li>
+                <li><a class="dropdown-item" href="departamentos.html">Departamentos</a></li>
+                <li><a class="dropdown-item" href="factura.html">Facturas</a></li>
+                <li><a class="dropdown-item" href="habitacion.html">Habitaciones</a></li>
+                <li><a class="dropdown-item" href="medicamento.html">Medicamentos</a></li>
+                <li><a class="dropdown-item" href="tratamiento.html">Tratamientos</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container admin-panel my-4">
+    <div class="mb-4">
+      <h2 class="text-info">Administración de Pacientes</h2>
+    </div>
+
+    <!-- Filtros de búsqueda -->
+    <div class="row filters mb-3">
+      <div class="col-md-4 mb-2">
+        <input type="text" class="form-control filter-input" placeholder="Filtrar por nombre" id="filterName">
+      </div>
+      <div class="col-md-4 mb-2">
+        <input type="text" class="form-control filter-input" placeholder="Filtrar por dirección" id="filterDireccion">
+      </div>
+      <div class="col-md-4 mb-2">
+        <input type="date" class="form-control filter-input" placeholder="Filtrar por fecha de nacimiento" id="filterFechaNacimiento">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12 text-end">
+        
+      </div>
+    </div>
+
+    <!-- Tabla de pacientes -->
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="pacienteTableBody">
+          <!-- Los datos se inyectarán dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Formulario para registrar un nuevo paciente -->
+    <div>
+      <h4 class="text-info">Registrar nuevo paciente</h4>
+      <form id="registerPacienteForm" class="row g-3 mt-2">
+        <div class="col-md-4">
+          <label for="registerPacienteNombre" class="form-label">Nombre completo</label>
+          <input type="text" class="form-control" id="registerPacienteNombre" placeholder="Ej. Juan Pérez">
+        </div>
+        <div class="col-md-4">
+          <label for="registerPacienteFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+          <input type="date" class="form-control" id="registerPacienteFechaNacimiento">
+        </div>
+        <div class="col-md-4">
+          <label for="registerPacienteDireccion" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="registerPacienteDireccion" placeholder="Ej. Calle 123, Ciudad">
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-success mt-3">Registrar paciente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para editar paciente -->
+  <div class="modal fade" id="editPacienteModal" tabindex="-1" aria-labelledby="editPacienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPacienteModalLabel">Editar Paciente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editPacienteForm">
+            <!-- Campo oculto para el ID del paciente -->
+            <input type="hidden" id="editPacienteId">
+            <div class="mb-3">
+              <label for="editPacienteNombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="editPacienteNombre" placeholder="Ej. Juan Pérez">
+            </div>
+            <div class="mb-3">
+              <label for="editPacienteFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" id="editPacienteFechaNacimiento">
+            </div>
+            <div class="mb-3">
+              <label for="editPacienteDireccion" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="editPacienteDireccion" placeholder="Ej. Calle 123, Ciudad">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle con Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Lógica de administración para paciente -->
+  <script src="/js/paciente-admin.js"></script>
+</body>
+</html>
